@@ -5,7 +5,7 @@ import themeFile from "./util/theme";
 import store from "./redux/store";
 import Home from './pages/Home';
 import { Provider } from 'react-redux';
-import BooksPage from './pages/BooksPage';
+import Books from './pages/Books';
 import Navbar from './components/Navbar';
 import './App.css';
 
@@ -20,7 +20,7 @@ function App() {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={Home} />
-                <Route exact path="/books" component={BooksPage} />
+                <Route exact path="/books" component={Books} />
               </Switch>
             </div>
           </Router>
