@@ -10,7 +10,7 @@ import {
   Paper,
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import {getBooks} from "../../redux/actions/booksActions"
+import { getBooks, editBook, deleteBook } from "../../redux/actions/booksActions";
 import ItemBook from "./ItemBook";
 
 const styles = (theme) => ({
@@ -23,8 +23,12 @@ export class Books extends Component {
   }
 
   render() {
-    const { classes, data: {books} } = this.props;
-    console.log(books);
+    const {
+      classes,
+      data: { books },
+      editBook,
+      deleteBook
+    } = this.props;
     return (
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
@@ -39,8 +43,8 @@ export class Books extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {books.map(book => (
-              <ItemBook key={book.bookId} book={book} />
+            {books.map((book) => (
+              <ItemBook key={book.bookId} book={book} editBook={editBook} deleteBook={deleteBook} />
             ))}
           </TableBody>
         </Table>
@@ -50,11 +54,13 @@ export class Books extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  data: state.books
+  data: state.books,
 });
 
 const mapActionsToProps = {
-  getBooks
+  getBooks,
+  editBook,
+  deleteBook
 };
 
 export default connect(

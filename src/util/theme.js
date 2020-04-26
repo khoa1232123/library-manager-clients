@@ -98,6 +98,12 @@ export default {
       "& a": {
         margin: "20px 10px"
       }
+    },
+    bgLoading: {
+      position: "absolute",
+      top: "calc(50% - 50px)",
+      left: "calc(50% - 50px)",
+      transform: "translate(-50%, -50%)"
     }
   }
 };

@@ -8,7 +8,7 @@ import {
   DialogActions,
   withStyles,
 } from "@material-ui/core";
-import imgBook from "../../images/no-book.jpg";
+// import imgBook from "../../images/no-book.jpg";
 
 const styles = (theme) => ({
   ...theme.theme,
@@ -40,7 +40,7 @@ export class ShowBook extends Component {
   render() {
     const { open } = this.state;
     const {
-      classes,
+      // classes,
       book: {
         name,
         categories,
@@ -50,7 +50,7 @@ export class ShowBook extends Component {
         amount,
         area,
         release,
-        createdAt,
+        // createdAt,
       },
     } = this.props;
     return (

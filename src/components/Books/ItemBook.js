@@ -12,6 +12,13 @@ const style = (theme) => ({
 })
 
 export class ItemBook extends Component {
+
+  deleteBook(bookId) {
+    if (window.confirm("Are you sure you want to delete this book?")) {
+      this.props.deleteBook(bookId);
+    }
+  }
+
   render() {
     const {
       classes,
@@ -19,15 +26,16 @@ export class ItemBook extends Component {
         bookId,
         name,
         categories,
-        description,
+        // description,
         newPer,
         author,
-        amount,
-        area,
-        release,
-        createdAt
+        // amount,
+        // area,
+        // release,
+        // createdAt
       },
-      book
+      book,
+      editBook
     } = this.props;
     return (
       <TableRow>
@@ -44,14 +52,14 @@ export class ItemBook extends Component {
           <Button
             variant="contained"
             color="primary"
-            // onClick={() => updateProduct(product.productId)}
+            onClick={() => editBook(bookId)}
           >
             <EditIcon />
           </Button>{" "}
           <Button
             variant="contained"
             color="secondary"
-            // onClick={() => deleteProduct(product.productId)}
+            onClick={() => this.deleteBook(bookId)}
           >
             <DeleteOutlineIcon />
           </Button>

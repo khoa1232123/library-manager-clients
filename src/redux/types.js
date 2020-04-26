@@ -14,4 +14,7 @@ export const LOADING_DATA = "LOADING_DATA";
 export const LOADING_BOOK = "LOADING_BOOK";
 export const SET_BOOKS = "SET_BOOKS";
 export const SET_BOOK = "SET_BOOK";
+export const CREATE_BOOK = "CREATE_BOOK";
+export const EDIT_BOOK = "EDIT_BOOK";
 
+export const CLOSE_FORM = "CLOSE_FORM";
