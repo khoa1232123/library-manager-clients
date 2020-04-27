@@ -11,6 +11,7 @@ import {
 import FormBook from "../../components/Books/FormBook";
 import { connect } from "react-redux";
 import {createBook} from "../../redux/actions/booksActions";
+import SearchBooks from "../../components/Books/SearchBooks";
 
 
 const styles = (theme) => ({
@@ -37,6 +38,9 @@ export class Books extends Component {
               <CircularProgress size={100} className={classes.progress} />
             </div>
           )}
+        </Grid>
+        <Grid item xs={12}>
+          <SearchBooks />
         </Grid>
         <Grid item xs={12}>
           <TableBooks />

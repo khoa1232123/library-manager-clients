@@ -5,6 +5,7 @@ import {
   CREATE_BOOK,
   CLOSE_FORM,
   EDIT_BOOK,
+  SEARCH_BOOKS
 } from "../types";
 
 import axios from "axios";
@@ -106,6 +107,26 @@ export const deleteBook = bookId => dispatch => {
       });
     });
 };
+
+export const searchBooks = text => dispatch => {
+  dispatch({ type: LOADING_BOOK });
+  axios
+    .get("books")
+    .then((res) => {
+      var data = res.data.filter(book => book.name.toUpperCase().indexOf(text.toUpperCase()) > -1 );
+      console.log(data);
+      dispatch({
+        type: SEARCH_BOOKS,
+        payload: data,
+      });
+    })
+    .catch((err) => {
+      dispatch({
+        type: SEARCH_BOOKS,
+        payload: [],
+      });
+    });
+}
 
 export const closeForm = () => (dispatch) => {
   dispatch({ type: CLOSE_FORM });

@@ -98,12 +98,13 @@ export class FormBook extends Component {
   };
 
   onCloseForm = () => {
-    this.onClear();
     this.props.closeForm();
+    this.onClear();
   };
 
   render() {
     const {
+      bookId,
       name,
       image,
       categories,
@@ -124,7 +125,9 @@ export class FormBook extends Component {
         onClose={this.onCloseForm}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Add book</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          {bookId ? "Edit book" : "Add book"}
+        </DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
@@ -231,7 +234,7 @@ export class FormBook extends Component {
             Cancel
           </Button>
           <Button onClick={() => this.handleSubmit()} color="primary">
-            Add book
+            {bookId ? "Edit book" : "Add book"}
           </Button>
         </DialogActions>
       </Dialog>

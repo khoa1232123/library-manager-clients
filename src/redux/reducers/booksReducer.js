@@ -5,6 +5,7 @@ import {
   CLOSE_FORM,
   SET_BOOK,
   EDIT_BOOK,
+  SEARCH_BOOKS,
 } from "../types";
 
 const initialState = {
@@ -45,11 +46,18 @@ export default function (state = initialState, actions) {
         open: true,
         loading: false,
       };
+    case SEARCH_BOOKS:
+      return {
+        ...state,
+        books: actions.payload,
+        loading: false
+      };
     case CLOSE_FORM:
       return {
         ...state,
         open: false,
         loading: false,
+        book: [],
       };
     default:
       return {
