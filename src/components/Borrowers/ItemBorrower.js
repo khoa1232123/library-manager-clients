@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { TableRow, TableCell, Button, withStyles } from "@material-ui/core";
 import { DeleteOutline as DeleteOutlineIcon, Edit as EditIcon } from "@material-ui/icons";
-import imgBook from "../../images/no-book.jpg";
-import ShowBook from "./ShowBook";
+import imgBorrower from "../../images/no-borrower.jpg";
+import ShowBorrower from "./ShowBorrower";
 
 const style = (theme) => ({
   ...theme.theme,
@@ -11,51 +11,50 @@ const style = (theme) => ({
   }
 })
 
-export class ItemBook extends Component {
+export class ItemBorrower extends Component {
 
-  deleteBook(bookId) {
-    if (window.confirm("Are you sure you want to delete this book?")) {
-      this.props.deleteBook(bookId);
+  deleteBorrower(borrowerId) {
+    if (window.confirm("Are you sure you want to delete this Borrower?")) {
+      this.props.deleteBorrower(borrowerId);
     }
   }
 
   render() {
     const {
       classes,
-      book: {
-        bookId,
+      borrower: {
+        borrowerId,
         name,
         image,
-        categories,
-        newPer,
-        author,
+        classRoom,
+        position,
+        createdAt,
       },
-      book,
-      editBook
+      borrower,
+      editBorrower
     } = this.props;
     return (
       <TableRow>
         <TableCell component="th" scope="row">
-          <ShowBook book={book}>{name}</ShowBook>
+          {name}
         </TableCell>
         <TableCell align="center">
-          <img src={image ? image : imgBook} alt="" className={classes.img} />
+          <img src={image ? image : imgBorrower} alt="" className={classes.img} />
         </TableCell>
-        <TableCell align="center">{categories}</TableCell>
-        <TableCell align="center">{newPer}%</TableCell>
-        <TableCell align="center">{author}</TableCell>
+        <TableCell align="center">{classRoom}</TableCell>
+        <TableCell align="center">{position}</TableCell>
         <TableCell align="center">
           <Button
             variant="contained"
             color="primary"
-            onClick={() => editBook(bookId)}
+            onClick={() => editBorrower(borrowerId)}
           >
             <EditIcon />
           </Button>{" "}
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => this.deleteBook(bookId)}
+            onClick={() => this.deleteBorrower(borrowerId)}
           >
             <DeleteOutlineIcon />
           </Button>
@@ -65,4 +64,4 @@ export class ItemBook extends Component {
   }
 }
 
-export default withStyles(style)(ItemBook);
+export default withStyles(style)(ItemBorrower);

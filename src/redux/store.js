@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import booksReducer from "./reducers/booksReducer";
+import borrowersReducer from "./reducers/borrowersReducer";
 
 const initialState = {};
 
@@ -8,8 +9,7 @@ const middleware = [thunk];
 
 const reducers = combineReducers({
   books: booksReducer,
-  // data: dataReducer,
-  // UI: uiReducer
+  borrowers: borrowersReducer
 });
 
 const enhancers = compose(

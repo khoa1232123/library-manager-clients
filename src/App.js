@@ -6,6 +6,7 @@ import store from "./redux/store";
 import Home from "./pages/Home";
 import { Provider } from "react-redux";
 import Books from "./pages/Books";
+import Borrowers from "./pages/Borrowers";
 import Navbar from "./components/Navbar";
 import "./App.css";
 
@@ -22,6 +23,7 @@ function App() {
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/books" component={Books} />
+                  <Route exact path="/borrowers" component={Borrowers} />
                 </Switch>
               </div>
             </Container>
