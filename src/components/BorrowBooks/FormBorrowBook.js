@@ -10,18 +10,18 @@ import {
   Checkbox,
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { closeForm, submitBook } from "../../redux/actions/booksActions";
+import { closeForm, submitBorrowBook } from "../../redux/actions/borrowBooksActions";
 // import PropTypes from "prop-types";
 
 const styles = (theme) => ({
   ...theme.theme,
 });
 
-export class FormBook extends Component {
+export class FormBorrowBook extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookId: "",
+      borrowBookId: "",
       name: "",
       image: "",
       categories: "",
@@ -35,32 +35,22 @@ export class FormBook extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps && nextProps.data.book.bookId) {
+    if (nextProps && nextProps.data.borrowBook.borrowBookId) {
       const {
-        book: {
-          bookId,
+        borrowBook: {
+          borrowBookId,
           name,
           image,
-          categories,
-          description,
-          newPer,
-          author,
-          amount,
-          area,
-          release,
+          classRoom,
+          position,
         },
       } = nextProps.data;
       this.setState({
-        bookId: bookId,
+        borrowBookId: borrowBookId,
         name: name,
         image: image,
-        categories: categories,
-        description: description,
-        newPer: newPer,
-        author: author,
-        amount: amount,
-        area: area,
-        release: release,
+        classRoom: classRoom,
+        position: position,
       });
     } else {
       this.onClear();
@@ -80,22 +70,16 @@ export class FormBook extends Component {
   };
 
   handleSubmit = () => {
-    this.props.submitBook(this.state);
+    this.props.submitBorrowBook(this.state);
   };
 
   onClear = () => {
     this.setState({
-      bookId: "",
+      borrowBookId: "",
       name: "",
       image: "",
-      categories: "",
-      description: "",
-      newPer: 0,
-      author: "",
-      amount: 0,
-      area: "",
-      release: 0,
-      status: false
+      classRoom: "",
+      position: "",
     });
   };
 
@@ -106,17 +90,11 @@ export class FormBook extends Component {
 
   render() {
     const {
-      bookId,
+      borrowBookId,
       name,
       image,
-      categories,
-      description,
-      newPer,
-      author,
-      amount,
-      area,
-      release,
-      status
+      classRoom,
+      position,
     } = this.state;
     const {
       data: { open },
@@ -129,7 +107,7 @@ export class FormBook extends Component {
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">
-          {bookId ? "Edit book" : "Add book"}
+          {borrowBookId ? "Edit Borrow Book" : "Add Borrow Book"}
         </DialogTitle>
         <DialogContent>
           <TextField
@@ -157,85 +135,23 @@ export class FormBook extends Component {
           <TextField
             autoFocus
             margin="dense"
-            id="categories"
-            name="categories"
-            label="Categories"
+            id="classRoom"
+            name="classRoom"
+            label="Class Room"
             type="text"
             fullWidth
-            value={categories}
+            value={classRoom}
             onChange={this.handleChange}
           />
           <TextField
             autoFocus
             margin="dense"
-            id="description"
-            name="description"
-            label="Description"
+            id="position"
+            name="position"
+            label="Position"
             type="text"
             fullWidth
-            value={description}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="newPer"
-            name="newPer"
-            label="New Per"
-            type="number"
-            fullWidth
-            value={newPer}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="author"
-            name="author"
-            label="Author"
-            type="text"
-            fullWidth
-            value={author}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="amount"
-            name="amount"
-            label="Amount"
-            type="number"
-            fullWidth
-            value={amount}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="area"
-            name="area"
-            label="Area"
-            type="text"
-            fullWidth
-            value={area}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="release"
-            name="release"
-            label="Release"
-            type="number"
-            fullWidth
-            value={release}
-            onChange={this.handleChange}
-          />
-          <Checkbox
-            id="status"
-            name="status"
-            label="Status"
-            value={status}
+            value={position}
             onChange={this.handleChange}
           />
         </DialogContent>
@@ -244,7 +160,7 @@ export class FormBook extends Component {
             Cancel
           </Button>
           <Button onClick={() => this.handleSubmit()} color="primary">
-            {bookId ? "Edit book" : "Add book"}
+            {borrowBookId ? "Edit Borrow Book" : "Add Borrow Book"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -252,18 +168,18 @@ export class FormBook extends Component {
   }
 }
 
-FormBook.propTypes = {};
+FormBorrowBook.propTypes = {};
 
 const mapStateToProps = (state) => ({
-  data: state.books,
+  data: state.borrowBooks,
 });
 
 const mapActionsToProps = {
   closeForm,
-  submitBook,
+  submitBorrowBook,
 };
 
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(FormBook));
+)(withStyles(styles)(FormBorrowBook));

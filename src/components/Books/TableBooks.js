@@ -17,7 +17,7 @@ const styles = (theme) => ({
   ...theme.theme,
 });
 
-export class Books extends Component {
+export class TableBooks extends Component {
   componentDidMount() {
     this.props.getBooks();
   }
@@ -66,4 +66,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(Books));
+)(withStyles(styles)(TableBooks));

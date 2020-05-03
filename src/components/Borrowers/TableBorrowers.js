@@ -17,7 +17,7 @@ const styles = (theme) => ({
   ...theme.theme,
 });
 
-export class Borrowers extends Component {
+export class TableBorrowers extends Component {
   componentDidMount() {
     this.props.getBorrowers();
   }
@@ -65,4 +65,4 @@ const mapActionsToProps = {
 export default connect(
   mapStateToProps,
   mapActionsToProps
-)(withStyles(styles)(Borrowers));
+)(withStyles(styles)(TableBorrowers));
