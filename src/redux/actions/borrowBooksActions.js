@@ -5,7 +5,7 @@ import {
   CREATE_BORROWBOOK,
   CLOSE_FORM,
   EDIT_BORROWBOOK,
-  SEARCH_BORROWBOOKS
+  SEARCH_BORROWBOOKS,
 } from "../types";
 
 import axios from "axios";
@@ -88,32 +88,36 @@ export const submitBorrowBook = (data) => (dispatch) => {
   }
 };
 
-export const deleteBorrowBook = borrowBookId => dispatch => {
+export const deleteBorrowBook = (borrowBookId) => (dispatch) => {
   dispatch({ type: LOADING_BORROWBOOK });
   axios
     .delete(`/borrowBooks/${borrowBookId}`)
-    .then(res => {
+    .then((res) => {
       dispatch(getBorrowBooks());
       dispatch({
         type: SET_BORROWBOOK,
-        payload: res.data
+        payload: res.data,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log("no");
       dispatch({
         type: SET_BORROWBOOK,
-        payload: []
+        payload: [],
       });
     });
 };
 
-export const searchBorrowBooks = text => dispatch => {
+export const searchBorrowBooks = (text) => (dispatch) => {
   dispatch({ type: LOADING_BORROWBOOK });
   axios
     .get("borrowBooks")
     .then((res) => {
-      var data = res.data.filter(borrowBook => borrowBook.name.toUpperCase().indexOf(text.toUpperCase()) > -1 );
+      var data = res.data.filter(
+        (borrowBook) =>
+          borrowBook.book.name.toUpperCase().indexOf(text.toUpperCase()) > -1 ||
+          borrowBook.borrower.name.toUpperCase().indexOf(text.toUpperCase()) > -1
+      );
       console.log(data);
       dispatch({
         type: SEARCH_BORROWBOOKS,
@@ -126,7 +130,7 @@ export const searchBorrowBooks = text => dispatch => {
         payload: [],
       });
     });
-}
+};
 
 export const closeForm = () => (dispatch) => {
   dispatch({ type: CLOSE_FORM });

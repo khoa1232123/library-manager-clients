@@ -8,9 +8,17 @@ import {
   DialogActions,
   withStyles,
   Checkbox,
+  Select,
 } from "@material-ui/core";
 import { connect } from "react-redux";
-import { closeForm, submitBorrowBook } from "../../redux/actions/borrowBooksActions";
+import {
+  closeForm,
+  submitBorrowBook,
+} from "../../redux/actions/borrowBooksActions";
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import { getBooks } from "../../redux/actions/booksActions";
+import { getBorrowers } from "../../redux/actions/borrowersActions";
+import SelectCustomizer from "../plus/SelectCustomizer";
 // import PropTypes from "prop-types";
 
 const styles = (theme) => ({
@@ -22,35 +30,42 @@ export class FormBorrowBook extends Component {
     super(props);
     this.state = {
       borrowBookId: "",
-      name: "",
-      image: "",
-      categories: "",
-      description: "",
-      newPer: 0,
-      author: "",
+      borrower: { name: "" },
+      book: { name: "" },
       amount: 0,
-      area: "",
-      release: 0,
+      returned: false,
+      overdue: 0,
+      amount: 0,
+      returnDay: "",
+      createdAt: "",
     };
   }
 
+  componentDidMount() {
+    this.props.getBorrowers();
+    this.props.getBooks();
+  }
+
   componentWillReceiveProps(nextProps) {
+    console.log(nextProps.data.borrowBook);
     if (nextProps && nextProps.data.borrowBook.borrowBookId) {
       const {
         borrowBook: {
           borrowBookId,
-          name,
-          image,
-          classRoom,
-          position,
+          book,
+          borrower,
+          overdue,
+          amount,
+          returnDay,
         },
       } = nextProps.data;
       this.setState({
         borrowBookId: borrowBookId,
-        name: name,
-        image: image,
-        classRoom: classRoom,
-        position: position,
+        book: book,
+        borrower: borrower,
+        overdue: overdue,
+        amount: amount,
+        returnDay: returnDay,
       });
     } else {
       this.onClear();
@@ -67,6 +82,15 @@ export class FormBorrowBook extends Component {
     this.setState({
       [e.target.name]: value,
     });
+    console.log(value);
+  };
+
+  handleChangeSelect = (id, value) => {
+    console.log(value);
+    this.setState({
+      [id]: value,
+    });
+    console.log(this.state);
   };
 
   handleSubmit = () => {
@@ -76,10 +100,14 @@ export class FormBorrowBook extends Component {
   onClear = () => {
     this.setState({
       borrowBookId: "",
-      name: "",
-      image: "",
-      classRoom: "",
-      position: "",
+      borrower: { name: "" },
+      book: { name: "" },
+      amount: 0,
+      returned: false,
+      overdue: 0,
+      amount: 0,
+      returnDay: "",
+      createdAt: "",
     });
   };
 
@@ -91,15 +119,18 @@ export class FormBorrowBook extends Component {
   render() {
     const {
       borrowBookId,
-      name,
-      image,
-      classRoom,
-      position,
+      book,
+      borrower,
+      overdue,
+      amount,
+      returnDay,
     } = this.state;
     const {
-      data: { open },
+      data: { open, borrowBook },
+      dataBooks: { books },
+      dataBorrowers: { borrowers },
     } = this.props;
-
+    console.log(book);
     return (
       <Dialog
         open={open}
@@ -110,48 +141,52 @@ export class FormBorrowBook extends Component {
           {borrowBookId ? "Edit Borrow Book" : "Add Borrow Book"}
         </DialogTitle>
         <DialogContent>
+          <SelectCustomizer
+            options={books}
+            oldOption={book}
+            id="book"
+            handleChangeSelect={this.handleChangeSelect}
+          />
+          <SelectCustomizer
+            options={borrowers}
+            oldOption={borrower}
+            id="borrower"
+            handleChangeSelect={this.handleChangeSelect}
+          />
+
+          {/* <Select /> */}
+
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            name="name"
-            label="Name"
-            type="text"
+            id="overdue"
+            name="overdue"
+            label="Overdue"
+            type="number"
             fullWidth
-            value={name}
+            value={overdue}
             onChange={this.handleChange}
           />
           <TextField
             autoFocus
             margin="dense"
-            id="image"
-            name="image"
-            label="Image"
-            type="text"
+            id="amount"
+            name="amount"
+            label="Amount"
+            type="number"
             fullWidth
-            value={image}
+            value={amount}
             onChange={this.handleChange}
           />
           <TextField
             autoFocus
             margin="dense"
-            id="classRoom"
-            name="classRoom"
-            label="Class Room"
-            type="text"
+            id="returnDay"
+            name="returnDay"
+            label="Return Day"
+            type="date"
             fullWidth
-            value={classRoom}
-            onChange={this.handleChange}
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="position"
-            name="position"
-            label="Position"
-            type="text"
-            fullWidth
-            value={position}
+            value={returnDay}
             onChange={this.handleChange}
           />
         </DialogContent>
@@ -172,11 +207,15 @@ FormBorrowBook.propTypes = {};
 
 const mapStateToProps = (state) => ({
   data: state.borrowBooks,
+  dataBooks: state.books,
+  dataBorrowers: state.borrowers,
 });
 
 const mapActionsToProps = {
   closeForm,
   submitBorrowBook,
+  getBooks,
+  getBorrowers,
 };
 
 export default connect(

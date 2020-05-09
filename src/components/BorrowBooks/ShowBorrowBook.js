@@ -8,7 +8,6 @@ import {
   DialogActions,
   withStyles,
 } from "@material-ui/core";
-// import imgBorrowBook from "../../images/no-borrowBook.jpg";
 
 const styles = (theme) => ({
   ...theme.theme,

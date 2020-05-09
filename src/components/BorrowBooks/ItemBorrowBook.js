@@ -4,11 +4,8 @@ import {
   DeleteOutline as DeleteOutlineIcon,
   Edit as EditIcon,
 } from "@material-ui/icons";
-// import imgBorrowBook from "../../images/no-borrowBook.jpg";
 import ShowBorrowBook from "./ShowBorrowBook";
 import { connect } from "react-redux";
-import { getBook } from "../../redux/actions/booksActions";
-import { getBorrower } from "../../redux/actions/borrowersActions";
 
 const styles = (theme) => ({
   ...theme.theme,
@@ -18,13 +15,6 @@ const styles = (theme) => ({
 });
 
 export class ItemBorrowBook extends Component {
-  componentDidMount() {
-    var bookId = this.props.borrowBook.bookId;
-    this.props.getBook(bookId);
-    var borrowerId = this.props.borrowBook.borrowerId;
-    this.props.getBorrower(borrowerId);
-    console.log(this.props.borrowBook);
-  }
 
   deleteBorrowBook(borrowBookId) {
     if (window.confirm("Are you sure you want to delete this Borrow Book?")) {
@@ -35,13 +25,10 @@ export class ItemBorrowBook extends Component {
   render() {
     const {
       classes,
-      borrowBook: { borrowBookId, overdue, returnDay, returned },
-      dataBooks: { book },
-      dataBorrowers: { borrower },
+      borrowBook: { borrowBookId, book, borrower, overdue, returnDay, returned },
       borrowBook,
       editBorrowBook,
     } = this.props;
-    // console.log(dataBorrowers);
     return (
       <TableRow>
         <TableCell component="th" scope="row">
@@ -78,8 +65,6 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-  getBook,
-  getBorrower,
 };
 
 export default connect(
